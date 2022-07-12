@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>OSD2F Survey Test Station</title>
+</head>
+<body>
+
+    <main class="container">
+        <h1>OSD2F Survey Test Center Setup</h1>
+
+        {% if done %}
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">OSD2F successfully configured!</h4>
+                You can now proceed to the <a href="/survey">survey fill-in page</a> and start filling in a survey.
+            </div>
+        {% endif %}
+
+        <div class="alert alert-primary" role="alert">
+            <h4 class="alert-heading">Current OSD2F Status</h4>
+            <textarea class="form-control" rows="8">{{osd2f}}</textarea>
+        </div>
+
+        {% if not done %}
+            <form method="POST" action="/setup">
+                <input type="hidden" name="url" value="{{url}}">
+                <div class="mb-3 row">
+                    <label for="project_title" class="form-label col-sm-2 col-form-label">Project title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="project_title" name="project_title">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="admin_email" class="form-label col-sm-2 col-form-label">Administrator's E-Mail</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="admin_email" name="admin_email">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="js_callback_after_upload" class="form-label col-sm-2 col-form-label">JS Callback function name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="js_callback_after_upload" name="js_callback_after_upload">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="upload_config" class="form-label col-sm-2 col-form-label">Upload configuration</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="upload_config" name="upload_config" rows="8">{
+      "(^|/|\\)comments.json": {
+        "in_key": "comment_information",
+        "anonymizers": [
+          { "redact_text": "" }
+        ],
+        "accepted_fields": [
+          "timestamp",
+          "title",
+          "information.comment.comment_text"
+        ]
+      }
+    }
+                        </textarea>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="accept_button" class="form-label col-sm-2 col-form-label">accept_button</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="accept_button" name="accept_button" value="Bestätigen">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="decline_button" class="form-label col-sm-2 col-form-label">decline_button</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="decline_button" name="decline_button" value="Ablehnen">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="donate_button" class="form-label col-sm-2 col-form-label">donate_button</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="donate_button" name="donate_button" value="Spenden">
+                    </div>
+                </div>
+    <!--
+        end_text: Indem Sie unten auf Bestätigen klicken stimmen Sie unseren Nutzngsbedingungen zu.
+        lead: INSERT unsere Nutzungsbedingungen
+        points:
+        - Punkt 1
+        - Punkt 2
+        - Punkt 3
+        title: Ich möchte meine Daten spenden.
+      empty_selection: Das Datenformat wird nicht unterstützt.
+        <br> Haben Sie das richtige zip-File ausgewählt?
+      file_indicator_text: 'Einträge in Ihrer Datenspende: '
+      inspect_button: Einsehen und Bearbeiten
+      preview_component:
+        entries_in_file_text: 'Einträge in dieser Datei: '
+        explanation:
+        - Die erste Zeile zeigt die Anzahl der Einträge in der ausgewählten Datei an.
+        - Nutzen Sie die Suchleiste, um innerhalb der Dateien nach Inhalten zu suchen.
+        - Um Inhalte zu entfernen können Sie die entsprechende Zeile anwählen und auf "Auswahl löschen" klicken.
+        next_file_button: Nächste Datei
+        previous_file_button: Vorherige Datei
+        remove_rows_button: Entferne ausgewählte Zeilen
+        search_box_placeholder: Geben Sie hier einen Suchbegriff ein.
+        search_prompt: Suche
+        title: Einsehen und Bearbeiten Ihrer Datenspende
+      processing_text: Bearbeitet Datei für Vorschau
+      thanks_text: Vielen Dank, dass Sie osd2f@lmu.munich unterstützen!
+      upload_box:
+        explanation:
+        - Sie können den Windows Explorer/Finder auf Ihrem Gerät verwenden, um die zip-Dateien für die Spende auszuwählen.
+        - Sie können den Ordner auch per Drag and Drop in das Feld ziehen.
+        header: 'Datei(en) auswählen:'
+    -->
+
+                <button type="submit" class="btn btn-primary">Configure OSD2F</button>
+            </form>
+        {% endif %}
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>
