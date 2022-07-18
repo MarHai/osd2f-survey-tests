@@ -24,6 +24,22 @@
     <main class="container">
         <h1>OSD2F Survey Test Center Survey Page</h1>
 
+        <div class="alert alert-primary d-none" id="callback_status" role="alert">
+            <h4 class="alert-heading">OSD2F JavaScript Callback Function Status</h4>
+            <dl class="row">
+                <dt class="col-sm-3">Success</dt>
+                <dd class="col-sm-9 status-success"></dd>
+
+                <dt class="col-sm-3">Error Message</dt>
+                <dd class="col-sm-9 status-error"></dd>
+
+                <dt class="col-sm-3">Donation Summary</dt>
+                <dd class="col-sm-9">
+                    <textarea class="form-control status-donation" rows="8"></textarea>
+                </dd>
+            </dl>
+        </div>
+
         <form method="GET" action="/setup">
             <div class="mb-3">
                 <label for="political_orientation" class="form-label">
@@ -51,11 +67,25 @@
             </div>
             <button type="submit" class="btn btn-primary">Go!</button>
         </form>
+
+        <footer class="py-3 my-4">
+            <p class="text-center text-muted border-top pt-3"><a href="/">Back to Home</a></p>
+        </footer>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-    {{osd2f.js_embed}}
+    <script>
+    function osd2f_survey_test_debug (success, error, status) {
+        var status_element = document.getElementById('callback_status');
+        status_element.getElementsByClassName('status-success')[0].innerText = success ? 'true' : 'false';
+        status_element.getElementsByClassName('status-error')[0].innerText = error;
+        status_element.getElementsByClassName('status-donation')[0].value = JSON.stringify(status, null, 4).replaceAll('\n', '<br>');;
+        status_element.classList.remove('d-none');
+    }
+    </script>
+
+    {{osd2f.js_embed|safe|replace('\\','\\\\')}}
 </body>
 </html>

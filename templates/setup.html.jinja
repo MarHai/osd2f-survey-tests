@@ -16,113 +16,229 @@
     <main class="container">
         <h1>OSD2F Survey Test Center Setup</h1>
 
-        {% if done %}
+        {% if successfully_done %}
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">OSD2F successfully configured!</h4>
                 You can now proceed to the <a href="/survey">survey fill-in page</a> and start filling in a survey.
             </div>
         {% endif %}
 
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-{{ 'success' if osd2f.success else 'danger' }}" role="alert">
             <h4 class="alert-heading">Current OSD2F Status</h4>
-            <textarea class="form-control" rows="8">{{osd2f}}</textarea>
+            <textarea class="form-control" rows="20">{{osd2f_prettified}}</textarea>
         </div>
 
-        {% if not done %}
+        {% if not successfully_done %}
             <form method="POST" action="/setup">
                 <input type="hidden" name="url" value="{{url}}">
                 <div class="mb-3 row">
-                    <label for="project_title" class="form-label col-sm-2 col-form-label">Project title</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="project_title" name="project_title">
+                    <label for="project_title" class="form-label col-sm-4 col-form-label">Project title</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="project_title" name="project_title" value="{{defaults.project_title|default('')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="admin_email" class="form-label col-sm-2 col-form-label">Administrator's E-Mail</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="admin_email" name="admin_email">
+                    <label for="admin_email" class="form-label col-sm-4 col-form-label">Administrator's E-Mail</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" id="admin_email" name="admin_email" value="{{defaults.admin_email|default('')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="js_callback_after_upload" class="form-label col-sm-2 col-form-label">JS Callback function name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="js_callback_after_upload" name="js_callback_after_upload">
+                    <label for="js_callback_after_upload" class="form-label col-sm-4 col-form-label">JS Callback function name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="js_callback_after_upload" name="js_callback_after_upload" value="{{defaults.js_callback_after_upload|default('osd2f_survey_test_debug')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="upload_config" class="form-label col-sm-2 col-form-label">Upload configuration</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" id="upload_config" name="upload_config" rows="8">{
-      "(^|/|\\)comments.json": {
-        "in_key": "comment_information",
-        "anonymizers": [
-          { "redact_text": "" }
-        ],
-        "accepted_fields": [
-          "timestamp",
-          "title",
-          "information.comment.comment_text"
-        ]
-      }
-    }
-                        </textarea>
+                    <label for="upload_config" class="form-label col-sm-4 col-form-label">Upload configuration</label>
+                    <div class="col-sm-8">
+                        {% if defaults.upload_config %}
+                            <textarea class="form-control" id="upload_config" name="upload_config" rows="8">{{defaults.upload_config}}</textarea>
+                        {% else %}
+                            <textarea class="form-control" id="upload_config" name="upload_config" rows="16">{
+  "(^|/|\\)comments.json": {
+    "in_key": "comment_information",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "timestamp",
+      "title",
+      "information.comment.comment_text"
+    ]
+  }
+}</textarea>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label for="accept_button" class="form-label col-sm-2 col-form-label">accept_button</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="accept_button" name="accept_button" value="Bestätigen">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="decline_button" class="form-label col-sm-2 col-form-label">decline_button</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="decline_button" name="decline_button" value="Ablehnen">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="donate_button" class="form-label col-sm-2 col-form-label">donate_button</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="donate_button" name="donate_button" value="Spenden">
-                    </div>
-                </div>
-    <!--
-        end_text: Indem Sie unten auf Bestätigen klicken stimmen Sie unseren Nutzngsbedingungen zu.
-        lead: INSERT unsere Nutzungsbedingungen
-        points:
-        - Punkt 1
-        - Punkt 2
-        - Punkt 3
-        title: Ich möchte meine Daten spenden.
-      empty_selection: Das Datenformat wird nicht unterstützt.
-        <br> Haben Sie das richtige zip-File ausgewählt?
-      file_indicator_text: 'Einträge in Ihrer Datenspende: '
-      inspect_button: Einsehen und Bearbeiten
-      preview_component:
-        entries_in_file_text: 'Einträge in dieser Datei: '
-        explanation:
-        - Die erste Zeile zeigt die Anzahl der Einträge in der ausgewählten Datei an.
-        - Nutzen Sie die Suchleiste, um innerhalb der Dateien nach Inhalten zu suchen.
-        - Um Inhalte zu entfernen können Sie die entsprechende Zeile anwählen und auf "Auswahl löschen" klicken.
-        next_file_button: Nächste Datei
-        previous_file_button: Vorherige Datei
-        remove_rows_button: Entferne ausgewählte Zeilen
-        search_box_placeholder: Geben Sie hier einen Suchbegriff ein.
-        search_prompt: Suche
-        title: Einsehen und Bearbeiten Ihrer Datenspende
-      processing_text: Bearbeitet Datei für Vorschau
-      thanks_text: Vielen Dank, dass Sie osd2f@lmu.munich unterstützen!
-      upload_box:
-        explanation:
-        - Sie können den Windows Explorer/Finder auf Ihrem Gerät verwenden, um die zip-Dateien für die Spende auszuwählen.
-        - Sie können den Ordner auch per Drag and Drop in das Feld ziehen.
-        header: 'Datei(en) auswählen:'
-    -->
 
-                <button type="submit" class="btn btn-primary">Configure OSD2F</button>
+                <h4 class="border-top pt-3 mt-3">Upload Box labels</h4>
+                <div class="mb-3 row">
+                    <label for="upload_box_header" class="form-label col-sm-4 col-form-label">header</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="upload_box_header" name="upload_box_header" value="{{defaults.upload_box_header|default('Datei(en) auswählen:')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="upload_box_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
+                    <div class="col-sm-8">
+{% set upload_box_explanation_default %}
+Sie können den Windows Explorer/Finder auf Ihrem Gerät verwenden, um die zip-Dateien für die Spende auszuwählen.
+Sie können den Ordner auch per Drag and Drop in das Feld ziehen.
+{% endset %}
+                        <textarea class="form-control" id="upload_box_explanation" name="upload_box_explanation" rows="4">{{defaults.upload_box_explanation|default(upload_box_explanation_default)}}</textarea>
+                    </div>
+                </div>
+
+                <h4 class="border-top pt-3 mt-3">Data Preview labels</h4>
+                <div class="mb-3 row">
+                    <label for="preview_component_title" class="form-label col-sm-4 col-form-label">title</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_title" name="preview_component_title" value="{{defaults.preview_component_title|default('Einsehen und Bearbeiten Ihrer Datenspende')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
+                    <div class="col-sm-8">
+{% set preview_component_explanation_default %}
+Die erste Zeile zeigt die Anzahl der Einträge in der ausgewählten Datei an.
+Nutzen Sie die Suchleiste, um innerhalb der Dateien nach Inhalten zu suchen.
+Um Inhalte zu entfernen können Sie die entsprechende Zeile anwählen und auf "Entferne ausgewählte Zeilen" klicken.
+{% endset %}
+                        <textarea class="form-control" id="preview_component_explanation" name="preview_component_explanation" rows="4">{{defaults.preview_component_explanation|default(preview_component_explanation_default)}}</textarea>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_entries_in_file_text" class="form-label col-sm-4 col-form-label">entries_in_file_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_entries_in_file_text" name="preview_component_entries_in_file_text" value="{{defaults.preview_component_entries_in_file_text|default('Einträge in dieser Datei: ')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_next_file_button" class="form-label col-sm-4 col-form-label">next_file_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_next_file_button" name="preview_component_next_file_button" value="{{defaults.preview_component_next_file_button|default('Nächste Datei')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_previous_file_button" class="form-label col-sm-4 col-form-label">previous_file_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_previous_file_button" name="preview_component_previous_file_button" value="{{defaults.preview_component_previous_file_button|default('Vorherige Datei')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_search_prompt" class="form-label col-sm-4 col-form-label">search_prompt</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_search_prompt" name="preview_component_search_prompt" value="{{defaults.preview_component_search_prompt|default('Suche')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_search_box_placeholder" class="form-label col-sm-4 col-form-label">search_box_placeholder</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_search_box_placeholder" name="preview_component_search_box_placeholder" value="{{defaults.preview_component_search_box_placeholder|default('Geben Sie hier einen Suchbegriff ein.')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_component_remove_rows_button" class="form-label col-sm-4 col-form-label">remove_rows_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_component_remove_rows_button" name="preview_component_remove_rows_button" value="{{defaults.preview_component_remove_rows_button|default('Entferne ausgewählte Zeilen')}}">
+                    </div>
+                </div>
+
+                <h4 class="border-top pt-3 mt-3">Consent Popup labels</h4>
+                <div class="mb-3 row">
+                    <label for="consent_popup_title" class="form-label col-sm-4 col-form-label">title</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="consent_popup_title" name="consent_popup_title" value="{{defaults.consent_popup_title|default('Ich möchte meine Daten spenden')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="consent_popup_lead" class="form-label col-sm-4 col-form-label">lead</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="consent_popup_lead" name="consent_popup_lead" value="{{defaults.consent_popup_lead|default('INSERT unsere Nutzungsbedingungen')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="consent_popup_points" class="form-label col-sm-4 col-form-label">points (new lines will yield separate bullet points)</label>
+                    <div class="col-sm-8">
+{% set consent_popup_points_default %}
+Punkt 1
+Punkt 2
+Punkt 3
+{% endset %}
+                        <textarea class="form-control" id="consent_popup_points" name="consent_popup_points" rows="4">{{defaults.consent_popup_points|default(consent_popup_points_default)}}</textarea>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="consent_popup_end_text" class="form-label col-sm-4 col-form-label">end_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="consent_popup_end_text" name="consent_popup_end_text" value="{{defaults.consent_popup_end_text|default('Indem Sie unten auf Bestätigen klicken stimmen Sie unseren Nutzngsbedingungen zu.')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="consent_popup_accept_button" class="form-label col-sm-4 col-form-label">accept_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="consent_popup_accept_button" name="consent_popup_accept_button" value="{{defaults.consent_popup_accept_button|default('Bestätigen')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="consent_popup_decline_button" class="form-label col-sm-4 col-form-label">decline_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="consent_popup_decline_button" name="consent_popup_decline_button" value="{{defaults.consent_popup_decline_button|default('Ablehnen')}}">
+                    </div>
+                </div>
+
+                <h4 class="border-top pt-3 mt-3">General labels</h4>
+                <div class="mb-3 row">
+                    <label for="processing_text" class="form-label col-sm-4 col-form-label">processing_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="processing_text" name="processing_text" value="{{defaults.processing_text|default('Bearbeitet Datei für Vorschau')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="empty_selection" class="form-label col-sm-4 col-form-label">empty_selection</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="empty_selection" name="empty_selection" value="{{defaults.empty_selection|default('Das Datenformat wird nicht unterstützt oder die Datei enthält keine Daten. Haben Sie die richtige Datei ausgewählt?')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="file_indicator_text" class="form-label col-sm-4 col-form-label">file_indicator_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="file_indicator_text" name="file_indicator_text" value="{{defaults.file_indicator_text|default('Einträge in Ihrer Datenspende: ')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="thanks_text" class="form-label col-sm-4 col-form-label">thanks_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="thanks_text" name="thanks_text" value="{{defaults.thanks_text|default('Vielen Dank, dass Sie uns mit Ihrer Datenspende unterstützen!')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inspect_button" class="form-label col-sm-4 col-form-label">inspect_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inspect_button" name="inspect_button" value="{{defaults.inspect_button|default('Einsehen und Bearbeiten')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="donate_button" class="form-label col-sm-4 col-form-label">donate_button</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="donate_button" name="donate_button" value="{{defaults.donate_button|default('Spenden')}}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-sm-4 col-form-label"></div>
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-primary">Configure OSD2F</button>
+                    </div>
+                </div>
             </form>
         {% endif %}
 
+
+        <footer class="py-3 my-4">
+            <p class="text-center text-muted border-top pt-3"><a href="/">Back to Home</a></p>
+        </footer>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
