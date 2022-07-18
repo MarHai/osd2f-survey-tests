@@ -81,7 +81,7 @@
         var status_element = document.getElementById('callback_status');
         status_element.getElementsByClassName('status-success')[0].innerText = success ? 'true' : 'false';
         status_element.getElementsByClassName('status-error')[0].innerText = error;
-        status_element.getElementsByClassName('status-donation')[0].value = JSON.stringify(status, null, 4).replaceAll('\n', '<br>');;
+        status_element.getElementsByClassName('status-donation')[0].value = JSON.stringify(status, null, 4);
         status_element.classList.remove('d-none');
     }
     </script>
