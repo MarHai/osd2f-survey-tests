@@ -56,15 +56,292 @@
                             <textarea class="form-control" id="upload_config" name="upload_config" rows="8">{{defaults.upload_config}}</textarea>
                         {% else %}
                             <textarea class="form-control" id="upload_config" name="upload_config" rows="16">{
-  "(^|/|\\)comments.json": {
-    "in_key": "comment_information",
+  "(^|/|\\\\)post_comments.json": {
+    "in_key": "comments_media_comments",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_map_data.Erstellungszeit des Kommentars.timestamp",
+      "string_map_data.Comment creation time.timestamp"
+    ]
+  },
+  "(^|/|\\\\)following.json": {
+    "in_key": "relationships_following",
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_list_data.href",
+      "string_list_data.value",
+      "string_list_data.timestamp"
+    ]
+  },
+  "(^|/|\\\\)blocked_accounts.json": {
+    "in_key": "relationships_blocked_users",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_list_data.href",
+      "string_list_data.value",
+      "string_list_data.timestamp"
+    ]
+  },
+  "(^|/|\\\\)liked_comments.json": {
+    "in_key": "likes_comment_likes",
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_list_data.href",
+      "string_list_data.timestamp"
+    ]
+  },
+  "(^|/|\\\\)liked_posts.json": {
+    "in_key": "likes_media_likes",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_list_data.href",
+      "string_list_data.timestamp"
+    ]
+  },
+  "(^|/|\\\\)story_likes.json": {
+    "in_key": "story_activities_story_likes",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "string_list_data.timestamp"
+    ]
+  },
+  "(^|/|\\\\)comments.json": {
+    "in_key": "comments_v2",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "data.comment.timestamp"
+    ]
+  },
+  "(^|/|\\\\)posts_and_comments.json": {
+    "in_key": "reactions_v2",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "timestamp",
+      "data.reaction.reaction"
+    ]
+  },
+  "(^|/|\\\\)pages_and_profiles_you_follow.json": {
+    "in_key": "pages_followed_v2",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "title",
+      "timestamp",
+      "data.name"
+    ]
+  },
+  "(^|/|\\\\)pages_you've_liked.json": {
+    "in_key": "page_likes_v2",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "name",
+      "timestamp"
+    ]
+  },
+  "(^|/|\\\\)story_reactions.json": {
+    "in_key": "stories_feedback_v2",
     "anonymizers": [
       { "redact_text": "" }
     ],
     "accepted_fields": [
       "timestamp",
-      "title",
-      "information.comment.comment_text"
+      "title"
+    ]
+  },
+  "following.js": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "following.accountId",
+      "following.userLink"
+    ]
+  },
+  "like.js": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "like.tweetId",
+      "like.fullText",
+      "like.expandedUrl"
+    ]
+  },
+  "tweet.js": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "tweet.retweeted",
+      "tweet.created_at",
+      "tweet.full_text",
+      "tweet.entities.urls.expanded_url",
+      "tweet.id",
+      "tweet.entities.user_mentions.screen_name",
+      "tweet.entities.user_mentions.id",
+      "tweet.in_reply_to_screen_name",
+      "tweet.in_reply_to_user_id"
+    ]
+  },
+  "Abos.csv": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "Kanal-ID",
+      "Kanal-URL",
+      "Kanaltitel"
+    ]
+  },
+  "subscriptions.csv": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "Channel ID",
+      "Channel URL",
+      "Channel title"
+    ]
+  },
+  "Wiedergabeverlauf.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "video_url",
+      "video_title",
+      "channel",
+      "Time"
+    ],
+    "html_css_element": ".outer-cell",
+    "html_css_fields": [
+      { "a:first-child": "href" },
+      { "a:first-child": "text" },
+      { "a:nth-of-type(2)": "text" },
+      { ".content-cell": "text-pure" }
+    ]
+  },
+  "watch-history.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "video_url",
+      "video_title",
+      "channel",
+      "Time"
+    ],
+    "html_css_element": ".outer-cell",
+    "html_css_fields": [
+      { "a:first-child": "href" },
+      { "a:first-child": "text" },
+      { "a:nth-of-type(2)": "text" },
+      { ".content-cell": "text-pure" }
+    ]
+  },
+  "Suchverlauf.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "Such_url",
+      "Such_text",
+      "Time"
+    ],
+    "html_css_element": ".outer-cell",
+    "html_css_fields": [
+      { "a:first-child": "href" },
+      { "a:first-child": "text" },
+      { ".content-cell": "text-pure" }
+    ]
+  },
+  "search-history.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "Such_url",
+      "Such_text",
+      "Time"
+    ],
+    "html_css_element": ".outer-cell",
+    "html_css_fields": [
+      { "a:first-child": "href" },
+      { "a:first-child": "text" },
+      { ".content-cell": "text-pure" }
+    ]
+  },
+  "Liked videos.csv": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "csv_skip_n_lines_at_top": 3,
+    "accepted_fields": [
+      "Video ID",
+      "Time Added",
+      "Video-ID",
+      "Zeitpunkt des Hinzufugens"
+    ]
+  },
+  "Meine Kommentare.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "kommentar"
+    ],
+    "html_css_element": "li",
+    "html_css_fields": [
+      { ":current": "text-pure" }
+    ]
+  },
+  "my-comments.html": {
+    "in_key": "data",
+    "anonymizers": [
+      { "redact_text": "" }
+    ],
+    "accepted_fields": [
+      "Comment_Text"
+    ],
+    "html_css_element": "li",
+    "html_css_fields": [
+      { ":current": "text-pure" }
     ]
   }
 }</textarea>
