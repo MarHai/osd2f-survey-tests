@@ -33,7 +33,7 @@ async def setup():
 
         return await render_template("setup.html.jinja",
                                      osd2f=json.loads(osd2f_status_request.text),
-                                     osd2f_prettified=json.dumps(json.loads(osd2f_status_request.text), indent=4),
+                                     osd2f_prettified=json.dumps(json.loads(osd2f_status_request.text), ensure_ascii=False, indent=4),
                                      url=url,
                                      successfully_done=False,
                                      defaults={})
@@ -83,7 +83,7 @@ async def setup():
                 file.write(osd2f_setup.text)
         return await render_template("setup.html.jinja",
                                      osd2f=osd2f_setup_json,
-                                     osd2f_prettified=json.dumps(osd2f_setup_json, indent=4),
+                                     osd2f_prettified=json.dumps(osd2f_setup_json, ensure_ascii=False, indent=4),
                                      url=data['url'],
                                      successfully_done=osd2f_setup_json['success'],
                                      defaults=data)
