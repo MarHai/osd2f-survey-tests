@@ -69,6 +69,7 @@
   },
   "(^|/|\\\\)following.json": {
     "in_key": "relationships_following",
+    "anonymizers": [
       { "redact_text": "" }
     ],
     "accepted_fields": [
@@ -92,6 +93,7 @@
   },
   "(^|/|\\\\)liked_comments.json": {
     "in_key": "likes_comment_likes",
+    "anonymizers": [
       { "redact_text": "" }
     ],
     "accepted_fields": [
@@ -173,7 +175,7 @@
       "title"
     ]
   },
-  "following.js": {
+  "(^|/|\\\\)following.js": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -183,7 +185,7 @@
       "following.userLink"
     ]
   },
-  "like.js": {
+  "(^|/|\\\\)like.js": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -194,7 +196,7 @@
       "like.expandedUrl"
     ]
   },
-  "tweet.js": {
+  "(^|/|\\\\)tweet.js": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -211,7 +213,7 @@
       "tweet.in_reply_to_user_id"
     ]
   },
-  "Abos.csv": {
+  "(^|/|\\\\)Abos.csv": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -222,7 +224,7 @@
       "Kanaltitel"
     ]
   },
-  "subscriptions.csv": {
+  "(^|/|\\\\)subscriptions.csv": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -233,7 +235,7 @@
       "Channel title"
     ]
   },
-  "Wiedergabeverlauf.html": {
+  "(^|/|\\\\)Wiedergabeverlauf.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -252,7 +254,7 @@
       { ".content-cell": "text-pure" }
     ]
   },
-  "watch-history.html": {
+  "(^|/|\\\\)watch-history.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -271,7 +273,7 @@
       { ".content-cell": "text-pure" }
     ]
   },
-  "Suchverlauf.html": {
+  "(^|/|\\\\)Suchverlauf.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -288,7 +290,7 @@
       { ".content-cell": "text-pure" }
     ]
   },
-  "search-history.html": {
+  "(^|/|\\\\)search-history.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -305,7 +307,7 @@
       { ".content-cell": "text-pure" }
     ]
   },
-  "Liked videos.csv": {
+  "(^|/|\\\\)Liked videos.csv": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -315,10 +317,10 @@
       "Video ID",
       "Time Added",
       "Video-ID",
-      "Zeitpunkt des Hinzufugens"
+      "Zeitpunkt des Hinzufügens"
     ]
   },
-  "Meine Kommentare.html": {
+  "(^|/|\\\\)Meine Kommentare.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
@@ -331,7 +333,7 @@
       { ":current": "text-pure" }
     ]
   },
-  "my-comments.html": {
+  "(^|/|\\\\)my-comments.html": {
     "in_key": "data",
     "anonymizers": [
       { "redact_text": "" }
