@@ -32,6 +32,12 @@
             <form method="POST" action="/setup">
                 <input type="hidden" name="url" value="{{url}}">
                 <div class="mb-3 row">
+                    <label for="token" class="form-label col-sm-4 col-form-label">token</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="token" name="token" value="{{defaults.token|default('do not use in production')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="project_title" class="form-label col-sm-4 col-form-label">Project title</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="project_title" name="project_title" value="{{defaults.project_title|default('')}}">

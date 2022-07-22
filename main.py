@@ -41,6 +41,7 @@ async def setup():
         data = await request.form
         osd2f_setup = post(data['url'] + "survey",
                            json={
+                               "token": data['token'],
                                "project_title": data['project_title'],
                                "admin_email": data['admin_email'],
                                "js_callback_after_upload": data['js_callback_after_upload'],
@@ -81,6 +82,12 @@ async def setup():
         if osd2f_setup_json['success']:
             with open('osd2f_config.json', 'w') as file:
                 file.write(osd2f_setup.text)
+            for i in range(len(osd2f_setup_json['head_inclusion'])):
+                head_file = osd2f_setup_json['head_inclusion'][i]
+                head_file_response = get(head_file)
+                head_file_name = head_file.split('/').pop()
+                open(head_file_name, 'wb').write(head_file_response.content)
+                osd2f_setup_json['head_inclusion'][i] = head_file_name
         return await render_template("setup.html.jinja",
                                      osd2f=osd2f_setup_json,
                                      osd2f_prettified=json.dumps(osd2f_setup_json, ensure_ascii=False, indent=4),
@@ -94,6 +101,10 @@ async def survey():
     with open('osd2f_config.json', mode='r') as file:
         osd2f_config_raw = file.read()
     osd2f_config = json.loads(osd2f_config_raw)
+    osd2f_config['js_embed'] = osd2f_config['js_embed'].replace(osd2f_config['js_embed_placeholder_surveyid'],
+                                                                '42')
+    osd2f_config['js_embed'] = osd2f_config['js_embed'].replace(osd2f_config['js_embed_placeholder_libarchivejs'],
+                                                                '/static/libarchive.js/worker-bundle.js')
     return await render_template("survey.html.jinja",
                                  osd2f=osd2f_config)
 
