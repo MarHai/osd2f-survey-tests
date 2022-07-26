@@ -39,13 +39,25 @@ async def setup():
                                      defaults={})
     else:
         data = await request.form
+        try:
+            data_upload = json.loads(data['upload_config'])
+        except json.JSONDecodeError as error:
+            return await render_template("setup.html.jinja",
+                                         osd2f={"success": False,
+                                                "error": f"Invalid JSON: {str(error)}"},
+                                         osd2f_prettified=json.dumps({"success": False,
+                                                                      "error": f"Invalid JSON: {str(error)}"}, ensure_ascii=False, indent=4),
+                                         url=data['url'],
+                                         successfully_done=False,
+                                         defaults=data)
+
         osd2f_setup = post(data['url'] + "survey",
                            json={
                                "token": data['token'],
                                "project_title": data['project_title'],
                                "admin_email": data['admin_email'],
                                "js_callback_after_upload": data['js_callback_after_upload'],
-                               "upload": json.loads(data['upload_config']),
+                               "upload": data_upload,
                                "content": {
                                    "blocks": [],
                                    "upload_box": {
