@@ -368,8 +368,7 @@
                     <label for="upload_box_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
                     <div class="col-sm-8">
 {% set upload_box_explanation_default %}
-Sie können den Windows Explorer/Finder auf Ihrem Gerät verwenden, um die zip-Dateien für die Spende auszuwählen.
-Sie können den Ordner auch per Drag and Drop in das Feld ziehen.
+Nutzen Sie den Windows Explorer/Finder auf Ihrem Gerät, um die heruntergeladenen ZIP-Dateien oder die enthaltenen Ordner für die Spende auszuwählen. Sie können die Dateien oder den Ordner auch per Drag and Drop hier hin ziehen.
 {% endset %}
                         <textarea class="form-control" id="upload_box_explanation" name="upload_box_explanation" rows="4">{{defaults.upload_box_explanation|default(upload_box_explanation_default)}}</textarea>
                     </div>
@@ -379,16 +378,16 @@ Sie können den Ordner auch per Drag and Drop in das Feld ziehen.
                 <div class="mb-3 row">
                     <label for="preview_component_title" class="form-label col-sm-4 col-form-label">title</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="preview_component_title" name="preview_component_title" value="{{defaults.preview_component_title|default('Einsehen und Bearbeiten Ihrer Datenspende')}}">
+                        <input type="text" class="form-control" id="preview_component_title" name="preview_component_title" value="{{defaults.preview_component_title|default('Ihre Datenspende')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="preview_component_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
                     <div class="col-sm-8">
 {% set preview_component_explanation_default %}
-Die erste Zeile zeigt die Anzahl der Einträge in der ausgewählten Datei an.
-Nutzen Sie die Suchleiste, um innerhalb der Dateien nach Inhalten zu suchen.
-Um Inhalte zu entfernen können Sie die entsprechende Zeile anwählen und auf 'Entferne ausgewählte Zeilen' klicken.
+Hier können Sie Ihre geplante Datenspende im Detail einsehen. Die Spende teilt sich möglicherweise in verschiedene Datentypen ein.
+Nutzen Sie die Suchleiste, um innerhalb der Daten nach Inhalten zu suchen.
+Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anwählen und auf 'Entferne ausgewählte Zeilen' klicken.
 {% endset %}
                         <textarea class="form-control" id="preview_component_explanation" name="preview_component_explanation" rows="4">{{defaults.preview_component_explanation|default(preview_component_explanation_default)}}</textarea>
                     </div>
@@ -440,16 +439,16 @@ Um Inhalte zu entfernen können Sie die entsprechende Zeile anwählen und auf 'E
                 <div class="mb-3 row">
                     <label for="consent_popup_lead" class="form-label col-sm-4 col-form-label">lead</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="consent_popup_lead" name="consent_popup_lead" value="{{defaults.consent_popup_lead|default('INSERT unsere Nutzungsbedingungen')}}">
+                        <input type="text" class="form-control" id="consent_popup_lead" name="consent_popup_lead" value="{{defaults.consent_popup_lead|default('Nutzungsbedingungen')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="consent_popup_points" class="form-label col-sm-4 col-form-label">points (new lines will yield separate bullet points)</label>
                     <div class="col-sm-8">
 {% set consent_popup_points_default %}
-Punkt 1
-Punkt 2
-Punkt 3
+Ihre Daten spenden Sie uns für wissenschaftliche Zwecke in der zuletzt gesehenen (anonymisierten) Form.
+Wir speichern diese (anonymisierten) Daten ausführlich für wissenschaftliche Zwecke auf unseren Servern in Deutschland.
+Die Daten werden nicht mit identifizierenden Merkmalen Ihrer Person, beispielsweise einer E-Mail-Adresse kombiniert.
 {% endset %}
                         <textarea class="form-control" id="consent_popup_points" name="consent_popup_points" rows="4">{{defaults.consent_popup_points|default(consent_popup_points_default)}}</textarea>
                     </div>
@@ -457,13 +456,13 @@ Punkt 3
                 <div class="mb-3 row">
                     <label for="consent_popup_end_text" class="form-label col-sm-4 col-form-label">end_text</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="consent_popup_end_text" name="consent_popup_end_text" value="{{defaults.consent_popup_end_text|default('Indem Sie unten auf Bestätigen klicken stimmen Sie unseren Nutzngsbedingungen zu.')}}">
+                        <input type="text" class="form-control" id="consent_popup_end_text" name="consent_popup_end_text" value="{{defaults.consent_popup_end_text|default('Indem Sie auf Bestätigen klicken stimmen Sie unseren Nutzungsbedingungen zu.')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="consent_popup_accept_button" class="form-label col-sm-4 col-form-label">accept_button</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="consent_popup_accept_button" name="consent_popup_accept_button" value="{{defaults.consent_popup_accept_button|default('Bestätigen')}}">
+                        <input type="text" class="form-control" id="consent_popup_accept_button" name="consent_popup_accept_button" value="{{defaults.consent_popup_accept_button|default('Bestätigen/Spenden')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -483,7 +482,7 @@ Punkt 3
                 <div class="mb-3 row">
                     <label for="empty_selection" class="form-label col-sm-4 col-form-label">empty_selection</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="empty_selection" name="empty_selection" value="{{defaults.empty_selection|default('Das Datenformat wird nicht unterstützt oder die Datei enthält keine Daten. Haben Sie die richtige Datei ausgewählt?')}}">
+                        <input type="text" class="form-control" id="empty_selection" name="empty_selection" value="{{defaults.empty_selection|default('Das Datenformat wird nicht unterstützt oder die Datei enthält keine Daten. Haben Sie die richtige(n) Datei(n) ausgewählt?')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
