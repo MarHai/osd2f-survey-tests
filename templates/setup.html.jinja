@@ -368,7 +368,7 @@
                     <label for="upload_box_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
                     <div class="col-sm-8">
 {% set upload_box_explanation_default %}
-Nutzen Sie den Windows Explorer/Finder auf Ihrem Gerät, um die heruntergeladenen ZIP-Dateien oder die enthaltenen Ordner für die Spende auszuwählen. Sie können die Dateien oder den Ordner auch per Drag and Drop hier hin ziehen.
+Nutzen Sie den Explorer/Finder auf Ihrem Gerät, um die heruntergeladenen Dateien/Ordner für die Spende auszuwählen. Sie können die Dateien/Ordner auch per Drag and Drop hier hin ziehen.
 {% endset %}
                         <textarea class="form-control" id="upload_box_explanation" name="upload_box_explanation" rows="4">{{defaults.upload_box_explanation|default(upload_box_explanation_default)}}</textarea>
                     </div>
@@ -382,14 +382,60 @@ Nutzen Sie den Windows Explorer/Finder auf Ihrem Gerät, um die heruntergeladene
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="preview_component_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate bullet points)</label>
+                    <label for="preview_component_explanation" class="form-label col-sm-4 col-form-label">explanation (new lines will yield separate paragraphs)</label>
                     <div class="col-sm-8">
 {% set preview_component_explanation_default %}
-Hier können Sie Ihre geplante Datenspende im Detail einsehen. Die Spende teilt sich möglicherweise in verschiedene Datentypen ein.
-Nutzen Sie die Suchleiste, um innerhalb der Daten nach Inhalten zu suchen.
-Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anwählen und auf 'Entferne ausgewählte Zeilen' klicken.
+Hier können Sie Ihre geplante Datenspende im Detail einsehen. Die Spende teilt sich möglicherweise in verschiedene Datentypen ein. Nutzen Sie die Suchleiste, um innerhalb der Daten nach Inhalten zu suchen. Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anwählen und auf 'Zeilen entfernen' klicken.
 {% endset %}
                         <textarea class="form-control" id="preview_component_explanation" name="preview_component_explanation" rows="4">{{defaults.preview_component_explanation|default(preview_component_explanation_default)}}</textarea>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_file_text" class="form-label col-sm-4 col-form-label">file_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_file_text" name="preview_file_text" value="{{defaults.preview_file_text|default('Datei:')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_entries_per_page_text" class="form-label col-sm-4 col-form-label">entries_per_page_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_entries_per_page_text" name="preview_entries_per_page_text" value="{{defaults.preview_entries_per_page_text|default('Einträge je Seite:')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_today_text" class="form-label col-sm-4 col-form-label">today_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_today_text" name="preview_today_text" value="{{defaults.preview_today_text|default('Heute')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_close_text" class="form-label col-sm-4 col-form-label">close_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_close_text" name="preview_close_text" value="{{defaults.preview_close_text|default('Schließen')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_startdate_text" class="form-label col-sm-4 col-form-label">startdate_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_startdate_text" name="preview_startdate_text" value="{{defaults.preview_startdate_text|default('Startdatum')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_enddate_text" class="form-label col-sm-4 col-form-label">enddate_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_enddate_text" name="preview_enddate_text" value="{{defaults.preview_enddate_text|default('Enddatum')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_no_matches_text" class="form-label col-sm-4 col-form-label">no_matches_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_no_matches_text" name="preview_no_matches_text" value="{{defaults.preview_no_matches_text|default('Es konnten keine übereinstimmenden Ergebnisse gefunden werden.')}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="preview_show_all_text" class="form-label col-sm-4 col-form-label">show_all_text</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="preview_show_all_text" name="preview_show_all_text" value="{{defaults.preview_show_all_text|default('Alle anzeigen')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -419,13 +465,13 @@ Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anw�
                 <div class="mb-3 row">
                     <label for="preview_component_search_box_placeholder" class="form-label col-sm-4 col-form-label">search_box_placeholder</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="preview_component_search_box_placeholder" name="preview_component_search_box_placeholder" value="{{defaults.preview_component_search_box_placeholder|default('Geben Sie hier einen Suchbegriff ein.')}}">
+                        <input type="text" class="form-control" id="preview_component_search_box_placeholder" name="preview_component_search_box_placeholder" value="{{defaults.preview_component_search_box_placeholder|default('Suche ...')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="preview_component_remove_rows_button" class="form-label col-sm-4 col-form-label">remove_rows_button</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="preview_component_remove_rows_button" name="preview_component_remove_rows_button" value="{{defaults.preview_component_remove_rows_button|default('Entferne ausgewählte Zeilen')}}">
+                        <input type="text" class="form-control" id="preview_component_remove_rows_button" name="preview_component_remove_rows_button" value="{{defaults.preview_component_remove_rows_button|default('Zeilen entfernen')}}">
                     </div>
                 </div>
 
@@ -439,7 +485,7 @@ Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anw�
                 <div class="mb-3 row">
                     <label for="consent_popup_lead" class="form-label col-sm-4 col-form-label">lead</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="consent_popup_lead" name="consent_popup_lead" value="{{defaults.consent_popup_lead|default('Nutzungsbedingungen')}}">
+                        <input type="text" class="form-control" id="consent_popup_lead" name="consent_popup_lead" value="{{defaults.consent_popup_lead|default('Nutzungsbedingungen:')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -447,7 +493,7 @@ Um Inhalte vor der Spende zu entfernen, können Sie die entsprechende Zeile anw�
                     <div class="col-sm-8">
 {% set consent_popup_points_default %}
 Ihre Daten spenden Sie uns für wissenschaftliche Zwecke in der zuletzt gesehenen (anonymisierten) Form.
-Wir speichern diese (anonymisierten) Daten ausführlich für wissenschaftliche Zwecke auf unseren Servern in Deutschland.
+Wir speichern diese (anonymisierten) Daten ausschließlich für wissenschaftliche Zwecke auf unseren Servern in Deutschland.
 Die Daten werden nicht mit identifizierenden Merkmalen Ihrer Person, beispielsweise einer E-Mail-Adresse kombiniert.
 {% endset %}
                         <textarea class="form-control" id="consent_popup_points" name="consent_popup_points" rows="4">{{defaults.consent_popup_points|default(consent_popup_points_default)}}</textarea>
@@ -456,7 +502,7 @@ Die Daten werden nicht mit identifizierenden Merkmalen Ihrer Person, beispielswe
                 <div class="mb-3 row">
                     <label for="consent_popup_end_text" class="form-label col-sm-4 col-form-label">end_text</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="consent_popup_end_text" name="consent_popup_end_text" value="{{defaults.consent_popup_end_text|default('Indem Sie auf Bestätigen klicken stimmen Sie unseren Nutzungsbedingungen zu.')}}">
+                        <input type="text" class="form-control" id="consent_popup_end_text" name="consent_popup_end_text" value="{{defaults.consent_popup_end_text|default('Indem Sie auf Bestätigen/Spenden klicken stimmen Sie unseren Nutzungsbedingungen zu.')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -500,7 +546,7 @@ Die Daten werden nicht mit identifizierenden Merkmalen Ihrer Person, beispielswe
                 <div class="mb-3 row">
                     <label for="inspect_button" class="form-label col-sm-4 col-form-label">inspect_button</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inspect_button" name="inspect_button" value="{{defaults.inspect_button|default('Einsehen und Bearbeiten')}}">
+                        <input type="text" class="form-control" id="inspect_button" name="inspect_button" value="{{defaults.inspect_button|default('Ansehen/Filtern')}}">
                     </div>
                 </div>
                 <div class="mb-3 row">

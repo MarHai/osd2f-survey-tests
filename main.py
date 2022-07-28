@@ -76,7 +76,15 @@ async def setup():
                                        "remove_rows_button": data['preview_component_remove_rows_button'],
                                        "search_box_placeholder": data['preview_component_search_box_placeholder'],
                                        "search_prompt": data['preview_component_search_prompt'],
-                                       "title": data['preview_component_title']
+                                       "title": data['preview_component_title'],
+                                       "file_text": data['preview_file_text'],
+                                       "entries_per_page_text": data['preview_entries_per_page_text'],
+                                       "today_text": data['preview_today_text'],
+                                       "close_text": data['preview_close_text'],
+                                       "startdate_text": data['preview_startdate_text'],
+                                       "enddate_text": data['preview_enddate_text'],
+                                       "no_matches_text": data['preview_no_matches_text'],
+                                       "show_all_text": data['preview_show_all_text']
                                    },
                                    "consent_popup": {
                                        "accept_button": data['consent_popup_accept_button'],
