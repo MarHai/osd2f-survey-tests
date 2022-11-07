@@ -25,11 +25,11 @@ async def setup():
                                          error=True,
                                          error_title="URL missing",
                                          error_message="Enter a base URL first.")
-        except ConnectionError:
+        except ConnectionError as error:
             return await render_template("home.html.jinja",
                                          error=True,
                                          error_title="OSD2F not found",
-                                         error_message="Make sure the URL is correct, that it is only the base URL (e.g., https://data-donation.my-domain.de/), and that OSD2F runs in 'Survey' mode.")
+                                         error_message=f"Make sure the URL is correct, that it is only the base URL (e.g., https://data-donation.my-domain.de/), and that OSD2F runs in 'Survey' mode. Detailled error information: {str(error)}")
 
         return await render_template("setup.html.jinja",
                                      osd2f=json.loads(osd2f_status_request.text),
